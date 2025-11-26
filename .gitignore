@@ -1,0 +1,27 @@
+# --- File Kompilasi Java (Wajib dichecklist) ---
+target/
+*.class
+*.log
+*.jar
+*.war
+
+# --- File Konfigurasi IDE (Supaya settingan laptopmu ga kebawa ke teman/dosen) ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+.DS_Store
+
+# --- Folder Upload Gambar (PENTING UNTUK PROYEKMU) ---
+# Kita ingin folder ini ada, tapi isinya (gambar user) jangan diupload ke GitHub
+uploads/*
+!uploads/.gitkeep
+
+# --- Lain-lain ---
+HELP.md
+mvnw
+mvnw.cmd
+.mvn/
