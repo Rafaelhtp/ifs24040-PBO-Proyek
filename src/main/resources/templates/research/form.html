@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<body>
+<div layout:fragment="content">
+    
+    <div class="row justify-content-center anim-slide-up">
+        <div class="col-md-8 col-lg-6">
+            <div class="bg-dark p-5 rounded border border-secondary shadow-lg">
+                <h2 class="mb-4 text-white brand-logo">New Title</h2>
+                
+                <form th:action="@{/research/add}" th:object="${researchRequest}" method="post" enctype="multipart/form-data">
+                    
+                    <div class="mb-4">
+                        <label class="text-secondary mb-2">Title</label>
+                        <input type="text" th:field="*{title}" class="form-control form-control-dark" placeholder="Research Title" required>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <label class="text-secondary mb-2">Theme</label>
+                            <select th:field="*{researchTheme}" class="form-select form-control-dark">
+                                <option value="INFOKOM">INFOKOM</option>
+                                <option value="TTG">Teknologi Tepat Guna</option>
+                                <option value="Kesehatan">Kesehatan</option>
+                                <option value="Pendidikan">Pendidikan</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-secondary mb-2">Year</label>
+                            <input type="number" th:field="*{releaseYear}" class="form-control form-control-dark" value="2025">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="text-secondary mb-2">Grant Amount (Rp)</label>
+                        <input type="number" th:field="*{fundAmount}" class="form-control form-control-dark" placeholder="0" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="text-secondary mb-2">Cover Poster</label>
+                        <input type="file" name="coverImage" class="form-control form-control-dark" accept="image/*">
+                    </div>
+
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-netflix btn-lg">Save to My List</button>
+                        <a th:href="@{/research}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

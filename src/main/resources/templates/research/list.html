@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<body>
+<div layout:fragment="content">
+    
+    <div class="flex justify-between items-center mb-6 animate-enter">
+        <div>
+            <h2 class="text-2xl font-bold text-blue-100">Daftar Penelitian</h2>
+            <p class="text-slate-400 text-sm">Kelola semua data penelitian Anda</p>
+        </div>
+        <a th:href="@{/research/add}" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white rounded-md shadow-lg transition-all">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Data
+        </a>
+    </div>
+
+    <div class="space-y-4">
+        <div th:each="item, iterStat : ${researches}" 
+             class="animate-enter p-4 bg-gradient-to-r from-slate-800/70 to-blue-900/30 rounded-lg border border-slate-700/50 hover:border-blue-700/50 hover:shadow-xl hover:shadow-blue-900/20 transition-all backdrop-blur-sm group"
+             th:classappend="${'delay-' + (iterStat.index * 100)}">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-blue-100 group-hover:text-blue-300 transition-colors" th:text="${item.title}">Judul Penelitian</h3>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <span class="px-2 py-1 rounded-md text-xs font-medium bg-blue-900/50 text-blue-200 border border-blue-800" th:text="${item.researchTheme}">Tema</span>
+                        <span class="px-2 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700" th:text="${item.releaseYear}">Tahun</span>
+                    </div>
+                </div>
+                
+                <div class="text-right min-w-[150px]">
+                    <p class="text-xs text-slate-400 mb-1">Anggaran</p>
+                    <p class="text-lg font-bold text-blue-300" th:text="'Rp ' + ${#numbers.formatDecimal(item.fundAmount, 0, 'COMMA', 0, 'POINT')}">Rp 0</p>
+                </div>
+
+                <div class="flex gap-2">
+                    <a th:href="@{'/research/' + ${item.id}}" class="p-2 rounded-md bg-slate-800 hover:bg-blue-900/50 text-slate-300 hover:text-white border border-slate-700 transition-colors" title="Detail">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                    </a>
+                    <a th:href="@{'/research/delete/' + ${item.id}}" class="p-2 rounded-md bg-slate-800 hover:bg-red-900/50 text-slate-300 hover:text-red-400 border border-slate-700 transition-colors" onclick="return confirm('Yakin hapus data ini?')" title="Hapus">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(researches)}" class="text-center py-12 border border-slate-700/50 rounded-xl bg-slate-900/50 border-dashed">
+            <div class="inline-flex p-4 rounded-full bg-slate-800 mb-4">
+                <i data-lucide="folder-open" class="w-8 h-8 text-slate-500"></i>
+            </div>
+            <h3 class="text-slate-200 font-medium">Belum ada data</h3>
+            <p class="text-slate-500 text-sm mt-1">Mulai dengan menambahkan penelitian baru.</p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

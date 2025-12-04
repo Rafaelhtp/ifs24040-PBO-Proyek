@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <button th:fragment="button(label, variant, type)" 
+            th:type="${type ?: 'button'}"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2"
+            th:classappend="${variant == 'primary' ? 'bg-blue-600 text-white hover:bg-blue-700' : 
+                             (variant == 'destructive' ? 'bg-red-500 text-white hover:bg-red-600' : 
+                             (variant == 'outline' ? 'border border-slate-700 bg-transparent hover:bg-slate-800 text-slate-100' : 
+                             'bg-slate-100 text-slate-900 hover:bg-slate-200'))}">
+        <span th:text="${label}">Button</span>
+    </button>
+
+
+    <div th:fragment="input(name, type, placeholder)" class="space-y-2">
+        <label th:for="${name}" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-slate-200" th:text="${#strings.capitalize(name)}">Label</label>
+        <input th:id="${name}" 
+               th:name="${name}" 
+               th:type="${type ?: 'text'}" 
+               th:placeholder="${placeholder}"
+               class="flex h-10 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50">
+    </div>
+
+
+    <div th:fragment="card(title, description, content)" 
+         class="rounded-xl border border-slate-700 bg-slate-900/50 text-slate-100 shadow-sm backdrop-blur-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="font-semibold leading-none tracking-tight text-lg" th:text="${title}">Card Title</h3>
+            <p class="text-sm text-slate-400" th:if="${description}" th:text="${description}">Card Description</p>
+        </div>
+        <div class="p-6 pt-0" th:utext="${content}">
+            Card Content
+        </div>
+    </div>
+
+
+    <span th:fragment="badge(text, variant)" 
+          class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          th:classappend="${variant == 'success' ? 'border-transparent bg-green-500 text-white hover:bg-green-600' : 
+                           (variant == 'warning' ? 'border-transparent bg-yellow-500 text-white hover:bg-yellow-600' : 
+                           'border-transparent bg-blue-600 text-white hover:bg-blue-700')}"
+          th:text="${text}">
+        Badge
+    </span>
+
+
+    <div th:fragment="alert(message, type)" 
+         role="alert" 
+         class="relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground"
+         th:classappend="${type == 'error' ? 'border-red-900/50 text-red-600 dark:border-red-900 dark:text-red-200' : 'border-slate-800 bg-slate-900 text-slate-200'}">
+        <h5 class="mb-1 font-medium leading-none tracking-tight" th:text="${type == 'error' ? 'Error' : 'Info'}">Info</h5>
+        <div class="text-sm [&_p]:leading-relaxed" th:text="${message}">Alert Message</div>
+    </div>
+    
+<img th:fragment="imageWithFallback(src, alt, className)"
+         th:src="${src}"
+         th:alt="${alt}"
+         th:class="${className}"
+         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4KCg=='; this.classList.add('bg-gray-100', 'p-4', 'object-contain');"
+         />
+
+</body>
+</html>
