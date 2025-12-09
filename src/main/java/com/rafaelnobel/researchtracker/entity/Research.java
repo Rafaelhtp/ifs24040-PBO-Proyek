@@ -21,11 +21,26 @@ public class Research {
     @Column(nullable = false)
     private String researchTheme;
 
+    private String researcherName;
+    private String researcherEmail;
+    private String researcherInstitution;
+
+    private String topic;
+    @Column(length = 2000)
+    private String description;
+    @Column(length = 2000)
+    private String impact;
+
+    private String fundCurrency; // e.g., IDR, USD
+    private String fundSource;   // e.g., Dikti, Internal Kampus
+
     @Column(nullable = false)
     private Double fundAmount;
 
     @Column(nullable = false)
     private Integer releaseYear;
+
+  
 
     private String coverFilename;
 
@@ -47,6 +62,7 @@ public class Research {
     }
 
     // --- MANUAL GETTER & SETTER ---
+    
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
@@ -59,11 +75,37 @@ public class Research {
     public String getResearchTheme() { return researchTheme; }
     public void setResearchTheme(String researchTheme) { this.researchTheme = researchTheme; }
 
+    public String getResearcherName() { return researcherName; }
+    public void setResearcherName(String researcherName) { this.researcherName = researcherName; }
+
+    public String getResearcherEmail() { return researcherEmail; }
+    public void setResearcherEmail(String researcherEmail) { this.researcherEmail = researcherEmail; }
+
+    public String getResearcherInstitution() { return researcherInstitution; }
+    public void setResearcherInstitution(String researcherInstitution) { this.researcherInstitution = researcherInstitution; }
+
+    public String getTopic() { return topic; }
+    public void setTopic(String topic) { this.topic = topic; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getImpact() { return impact; }
+    public void setImpact(String impact) { this.impact = impact; }
+
+    public String getFundCurrency() { return fundCurrency; }
+    public void setFundCurrency(String fundCurrency) { this.fundCurrency = fundCurrency; }
+
+    public String getFundSource() { return fundSource; }
+    public void setFundSource(String fundSource) { this.fundSource = fundSource; }
+
     public Double getFundAmount() { return fundAmount; }
     public void setFundAmount(Double fundAmount) { this.fundAmount = fundAmount; }
 
     public Integer getReleaseYear() { return releaseYear; }
     public void setReleaseYear(Integer releaseYear) { this.releaseYear = releaseYear; }
+
+ 
 
     public String getCoverFilename() { return coverFilename; }
     public void setCoverFilename(String coverFilename) { this.coverFilename = coverFilename; }

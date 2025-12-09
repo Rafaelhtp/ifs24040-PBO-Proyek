@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
 <body>
 <div layout:fragment="content">
     
     <div class="mb-8 animate-enter">
-        <h1 class="text-3xl font-bold text-blue-100">Dashboard Analitik</h1>
-        <p class="text-slate-400">Monitoring performa penelitian dan alokasi dana hibah.</p>
+        <h1 class="text-3xl font-bold text-blue-100" th:text="#{dashboard.title}">Dashboard Analitik</h1>
+        <p class="text-slate-400" th:text="#{dashboard.subtitle}">Monitoring performa penelitian dan alokasi dana hibah.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        
         <div class="animate-enter delay-100 border border-blue-800/50 shadow-xl bg-gradient-to-br from-blue-800 to-blue-900 text-white rounded-xl p-6 relative overflow-hidden group hover:scale-[1.02] transition-transform">
             <div class="relative z-10">
-                <p class="text-blue-200 text-sm font-medium mb-1">Total Penelitian Aktif</p>
+                <p class="text-blue-200 text-sm font-medium mb-1" th:text="#{dashboard.card.totalResearch}">Total Penelitian Aktif</p>
                 <h3 class="text-4xl font-bold tracking-tight" th:text="${totalResearch}">0</h3>
             </div>
             <div class="absolute right-4 top-4 p-3 bg-blue-700/30 rounded-lg backdrop-blur-sm">
@@ -22,7 +21,7 @@
 
         <div class="animate-enter delay-200 border border-slate-700/50 shadow-xl bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-xl p-6 relative overflow-hidden group hover:scale-[1.02] transition-transform">
             <div class="relative z-10">
-                <p class="text-slate-300 text-sm font-medium mb-1">Total Anggaran</p>
+                <p class="text-slate-300 text-sm font-medium mb-1" th:text="#{dashboard.card.totalFund}">Total Anggaran</p>
                 <h3 class="text-3xl font-bold tracking-tight text-white">
                     Rp <span th:text="${#numbers.formatDecimal(totalFund, 0, 'COMMA', 0, 'POINT')}">0</span>
                 </h3>
@@ -34,9 +33,9 @@
 
         <div class="animate-enter delay-300 border border-blue-700/50 shadow-xl bg-gradient-to-br from-blue-700 to-blue-800 text-white rounded-xl p-6 relative overflow-hidden group hover:scale-[1.02] transition-transform">
             <div class="relative z-10">
-                <p class="text-blue-200 text-sm font-medium mb-1">Bidang Penelitian</p>
+                <p class="text-blue-200 text-sm font-medium mb-1" th:text="#{dashboard.card.themes}">Bidang Penelitian</p>
                 <h3 class="text-4xl font-bold tracking-tight" th:text="${totalThemes}">0</h3>
-                <p class="text-blue-300 text-xs mt-1">Tema Utama</p>
+                <p class="text-blue-300 text-xs mt-1" th:text="#{dashboard.card.themesSubtitle}">Tema Utama</p>
             </div>
             <div class="absolute right-4 top-4 p-3 bg-blue-600/30 rounded-lg backdrop-blur-sm">
                 <i data-lucide="pie-chart" class="w-6 h-6 text-blue-100"></i>
@@ -45,11 +44,10 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        
         <div class="animate-enter delay-300 border border-slate-700/50 shadow-xl bg-slate-900/80 backdrop-blur-sm rounded-xl overflow-hidden flex flex-col">
             <div class="p-5 bg-gradient-to-r from-slate-800/50 to-blue-900/30 border-b border-slate-700/50">
-                <h3 class="text-lg font-semibold text-blue-100">Total Dana per Tahun</h3>
-                <p class="text-xs text-slate-400">Tren pendanaan penelitian</p>
+                <h3 class="text-lg font-semibold text-blue-100" th:text="#{dashboard.section.year.title}">Total Dana per Tahun</h3>
+                <p class="text-xs text-slate-400" th:text="#{dashboard.section.year.subtitle}">Tren pendanaan penelitian</p>
             </div>
             <div class="p-5 flex-1">
                 <canvas id="yearChart" style="max-height: 250px; width: 100%;"></canvas>
@@ -58,8 +56,8 @@
 
         <div class="animate-enter delay-300 border border-slate-700/50 shadow-xl bg-slate-900/80 backdrop-blur-sm rounded-xl overflow-hidden flex flex-col">
             <div class="p-5 bg-gradient-to-r from-slate-800/50 to-blue-900/30 border-b border-slate-700/50">
-                <h3 class="text-lg font-semibold text-blue-100">Persentase per Tema</h3>
-                <p class="text-xs text-slate-400">Distribusi kategori penelitian</p>
+                <h3 class="text-lg font-semibold text-blue-100" th:text="#{dashboard.section.theme.title}">Persentase per Tema</h3>
+                <p class="text-xs text-slate-400" th:text="#{dashboard.section.theme.subtitle}">Distribusi kategori penelitian</p>
             </div>
             <div class="p-5 flex-1 flex justify-center">
                 <div style="width: 70%;">
@@ -72,11 +70,16 @@
     <div class="animate-enter delay-500 border border-slate-700/50 shadow-xl bg-slate-900/80 backdrop-blur-sm rounded-xl overflow-hidden">
         <div class="p-5 bg-gradient-to-r from-slate-800/50 to-blue-900/30 border-b border-slate-700/50 flex justify-between items-center">
             <div>
-                <h3 class="text-lg font-semibold text-blue-100">Daftar Penelitian</h3>
-                <p class="text-xs text-slate-400">Data penelitian terbaru</p>
+                <h3 class="text-lg font-semibold text-blue-100" th:text="#{dashboard.section.list.title}">Daftar Penelitian</h3>
+                <p class="text-xs text-slate-400" th:text="#{dashboard.section.list.subtitle}">Data penelitian terbaru</p>
             </div>
             <div class="relative">
-                <input type="text" placeholder="Cari..." class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-md px-3 py-1 focus:outline-none focus:border-blue-500">
+                <form th:action="@{/dashboard}" method="get">
+                    <input type="text" name="q" th:value="${q}" th:placeholder="#{dashboard.search.placeholder}" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-md px-3 py-1 focus:outline-none focus:border-blue-500">
+                </form>
+            </div>
+            <div>
+                <a th:href="@{/research/add}" class="ml-3 px-4 py-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white rounded-md shadow-lg transition-all" th:text="#{action.add}"></a>
             </div>
         </div>
         
@@ -84,24 +87,18 @@
             <div th:each="item : ${researches}" class="p-4 bg-gradient-to-r from-slate-800/70 to-blue-900/30 rounded-lg border border-slate-700/50 hover:border-blue-700/50 hover:shadow-lg transition-all group">
                 <div class="flex justify-between items-start gap-4">
                     <div class="flex-1">
-                        <h4 class="text-blue-100 font-medium group-hover:text-blue-300 transition-colors" th:text="${item.title}">Judul</h4>
+                        <a th:href="@{'/research/' + ${item.id}}" class="text-blue-100 font-medium group-hover:text-blue-300 transition-colors hover:underline" th:text="${item.title}">Judul</a>
                         <p class="text-slate-400 text-xs mt-1">
-                            <span th:text="${user.name}">Peneliti</span> • <span th:text="${item.releaseYear}">2024</span>
+                            <span th:text="${item.releaseYear}">2024</span>
                         </p>
                         <div class="flex gap-2 mt-2">
                             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-900 text-blue-200 border border-blue-700" th:text="${item.researchTheme}">TEMA</span>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-slate-400 text-[10px] uppercase">Anggaran</p>
-                        <p class="text-blue-300 font-bold text-sm" th:text="'Rp ' + ${#numbers.formatDecimal(item.fundAmount, 0, 'COMMA', 0, 'POINT')}">Rp 0</p>
-                    </div>
                 </div>
             </div>
             
-            <div th:if="${#lists.isEmpty(researches)}" class="text-center py-8 text-slate-500">
-                Belum ada data penelitian.
-            </div>
+            <div th:if="${#lists.isEmpty(researches)}" class="text-center py-8 text-slate-500" th:text="#{dashboard.empty}">Belum ada data penelitian.</div>
         </div>
     </div>
 
@@ -109,52 +106,10 @@
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.borderColor = '#334155';
         Chart.defaults.font.family = "'Inter', sans-serif";
-
-        // --- 1. BAR CHART (Dana per Tahun) ---
         const ctxYear = document.getElementById('yearChart').getContext('2d');
-        new Chart(ctxYear, {
-            type: 'bar',
-            data: {
-                labels: [[${yearLabels}]],
-                datasets: [{
-                    label: 'Total Dana (Rp)',
-                    data: [[${yearData}]],
-                    backgroundColor: '#3b82f6', // Blue-500
-                    borderRadius: 4,
-                    barThickness: 30
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#334155', borderDash: [4, 4] } },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
-
-        // --- 2. PIE CHART (Tema) ---
+        new Chart(ctxYear, { type: 'bar', data: { labels: [[${yearLabels}]], datasets: [{ label: /*[[#{dashboard.chart.year.label}]]*/ 'Total Dana (Rp)', data: [[${yearData}]], backgroundColor: '#3b82f6', borderRadius: 4, barThickness: 30 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#334155', borderDash: [4, 4] } }, x: { grid: { display: false } } } } });
         const ctxTheme = document.getElementById('themeChart').getContext('2d');
-        new Chart(ctxTheme, {
-            type: 'doughnut',
-            data: {
-                labels: [[${themeLabels}]],
-                datasets: [{
-                    data: [[${themeData}]],
-                    backgroundColor: ['#1e40af', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }
-                }
-            }
-        });
+        new Chart(ctxTheme, { type: 'doughnut', data: { labels: [[${themeLabels}]], datasets: [{ data: [[${themeData}]], backgroundColor: ['#1e40af', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } } } } });
     </script>
 </div>
 </body>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
+<body>
+<div layout:fragment="content">
+    <div class="flex justify-between items-center mb-6 animate-enter">
+        <div>
+            <h2 class="text-2xl font-bold text-blue-100" th:text="#{researcher.list.title}">Daftar Peneliti</h2>
+            <p class="text-slate-400 text-sm" th:text="#{researcher.list.subtitle}">Nama peneliti dari data penelitian</p>
+        </div>
+        <a th:href="@{/research/researchers/add}" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white rounded-md shadow-lg transition-all">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> <span th:text="#{researcher.action.add}">Tambah Data Peneliti</span>
+        </a>
+    </div>
+
+    <div class="space-y-2">
+        <div th:each="name : ${researchers}" class="p-3 bg-slate-800/70 rounded-md border border-slate-700/50 text-slate-200">
+            <span th:text="${name}">Nama</span>
+        </div>
+        <div th:if="${#lists.isEmpty(researchers)}" class="text-center py-8 text-slate-500" th:text="#{researcher.empty}">Belum ada data peneliti.</div>
+    </div>
+</div>
+</body>
+</html>

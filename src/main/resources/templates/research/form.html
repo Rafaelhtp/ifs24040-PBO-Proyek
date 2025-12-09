@@ -1,52 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
 <body>
 <div layout:fragment="content">
     
-    <div class="row justify-content-center anim-slide-up">
-        <div class="col-md-8 col-lg-6">
-            <div class="bg-dark p-5 rounded border border-secondary shadow-lg">
-                <h2 class="mb-4 text-white brand-logo">New Title</h2>
-                
-                <form th:action="@{/research/add}" th:object="${researchRequest}" method="post" enctype="multipart/form-data">
-                    
-                    <div class="mb-4">
-                        <label class="text-secondary mb-2">Title</label>
-                        <input type="text" th:field="*{title}" class="form-control form-control-dark" placeholder="Research Title" required>
-                    </div>
+    <div class="animate-enter">
+        <div class="rounded-t-xl bg-gradient-to-r from-blue-700 to-blue-900 p-6 text-white border border-blue-800/50">
+            <h2 class="text-2xl font-bold" th:text="${editId} != null ? #{form.header.edit} : #{form.header.add}"></h2>
+            <p class="text-blue-100 text-sm" th:text="#{form.header.subtitle}"></p>
+        </div>
+        <div class="border border-slate-700 bg-slate-900 rounded-b-xl p-6 space-y-6">
+            <form th:action="${editId} != null ? @{'/research/edit/' + ${editId}} : @{/research/add}" th:object="${researchRequest}" method="post" enctype="multipart/form-data" class="space-y-6">
 
-                    <div class="row mb-4">
-                        <div class="col-6">
-                            <label class="text-secondary mb-2">Theme</label>
-                            <select th:field="*{researchTheme}" class="form-select form-control-dark">
-                                <option value="INFOKOM">INFOKOM</option>
-                                <option value="TTG">Teknologi Tepat Guna</option>
-                                <option value="Kesehatan">Kesehatan</option>
-                                <option value="Pendidikan">Pendidikan</option>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3" th:text="#{form.section.research_info}"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.title}"></label>
+                            <input type="text" th:field="*{title}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.title}" required>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.topic}"></label>
+                            <input type="text" th:field="*{topic}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.topic}" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.theme}"></label>
+                            <input type="text" th:field="*{researchTheme}" list="themeList" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.theme}">
+                            <datalist id="themeList">
+                                <option th:each="t : ${themes}" th:value="${t}"></option>
+                            </datalist>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.year}"></label>
+                            <input type="number" th:field="*{releaseYear}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" value="2025">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.description}"></label>
+                            <textarea th:field="*{description}" rows="4" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.description}" required></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.impact}"></label>
+                            <textarea th:field="*{impact}" rows="3" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.impact}"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3" th:text="#{form.section.researcher_info}"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.researcher_name}"></label>
+                            <input type="text" th:field="*{researcherName}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" placeholder="Nama Peneliti" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.email}"></label>
+                            <input type="email" th:field="*{researcherEmail}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" placeholder="email@universitas.ac.id" required>
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.institution}"></label>
+                            <input type="text" th:field="*{researcherInstitution}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.institution}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3" th:text="#{form.section.funding_info}"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.currency}"></label>
+                            <select th:field="*{fundCurrency}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100">
+                                <option value="IDR">IDR</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
                             </select>
                         </div>
-                        <div class="col-6">
-                            <label class="text-secondary mb-2">Year</label>
-                            <input type="number" th:field="*{releaseYear}" class="form-control form-control-dark" value="2025">
+                        <div class="space-y-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.amount}"></label>
+                            <input type="number" th:field="*{fundAmount}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.fund_amount}" required>
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="text-slate-300 text-sm" th:text="#{label.fund_source}"></label>
+                            <input type="text" th:field="*{fundSource}" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" th:placeholder="#{ph.fund_source}">
                         </div>
                     </div>
+                </div>
 
-                    <div class="mb-4">
-                        <label class="text-secondary mb-2">Grant Amount (Rp)</label>
-                        <input type="number" th:field="*{fundAmount}" class="form-control form-control-dark" placeholder="0" required>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3" th:text="#{form.section.attachments}"></h3>
+                    <div class="space-y-2">
+                        <label class="text-slate-300 text-sm" th:text="#{label.cover}"></label>
+                        <input type="file" name="coverImage" class="w-full px-3 py-2 rounded-md bg-slate-800 border border-slate-700 text-slate-100" accept="image/*">
                     </div>
+                </div>
 
-                    <div class="mb-5">
-                        <label class="text-secondary mb-2">Cover Poster</label>
-                        <input type="file" name="coverImage" class="form-control form-control-dark" accept="image/*">
-                    </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md shadow" th:text="#{action.save}"></button>
+                    <a th:href="@{/research}" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-700" th:text="#{action.cancel}"></a>
+                </div>
 
-                    <div class="d-grid gap-3">
-                        <button type="submit" class="btn btn-netflix btn-lg">Save to My List</button>
-                        <a th:href="@{/research}" class="btn btn-outline-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 

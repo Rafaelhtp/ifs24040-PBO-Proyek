@@ -24,7 +24,7 @@ public class DashboardController {
     private UserRepository userRepository;
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model) {
+    public String dashboard(HttpSession session, Model model, @org.springframework.web.bind.annotation.RequestParam(required = false) String q) {
         User user = (User) session.getAttribute("user");
 
         // --- BYPASS LOGIN (Untuk Demo) ---
@@ -52,7 +52,15 @@ public class DashboardController {
             e.printStackTrace();
         }
 
-        // 1. Hitung Statistik Dasar
+        if (q != null && !q.isBlank()) {
+            String s = q.toLowerCase();
+            researches = researches.stream().filter(r ->
+                    (r.getTitle() != null && r.getTitle().toLowerCase().contains(s)) ||
+                    (r.getResearcherName() != null && r.getResearcherName().toLowerCase().contains(s)) ||
+                    (r.getResearchTheme() != null && r.getResearchTheme().toLowerCase().contains(s))
+            ).toList();
+        }
+
         double totalDana = researches.stream().filter(r -> r.getFundAmount() != null).mapToDouble(Research::getFundAmount).sum();
         long totalJudul = researches.size();
         long totalTema = researches.stream().map(Research::getResearchTheme).distinct().count();
@@ -74,7 +82,8 @@ public class DashboardController {
 
         // --- Kirim ke HTML ---
         model.addAttribute("user", user);
-        model.addAttribute("researches", researches); // Untuk List di bawah
+        model.addAttribute("researches", researches);
+        model.addAttribute("q", q);
         model.addAttribute("totalResearch", totalJudul);
         model.addAttribute("totalFund", totalDana);
         model.addAttribute("totalThemes", totalTema); // Kartu ke-3

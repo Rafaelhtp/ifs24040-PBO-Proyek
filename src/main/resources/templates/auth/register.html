@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register - Research System</title>
+    <title th:text="#{register.title}">Register - Research System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,24 +25,24 @@
 
         <div class="border border-slate-700/50 shadow-2xl bg-slate-900/80 backdrop-blur-sm rounded-xl p-8">
             <div class="text-center mb-6">
-                <h1 class="text-blue-100 text-3xl font-bold mb-2">Buat Akun Baru</h1>
-                <p class="text-slate-400 text-sm">Bergabung dengan sistem manajemen penelitian</p>
+                <h1 class="text-blue-100 text-3xl font-bold mb-2" th:text="#{register.header}">Buat Akun Baru</h1>
+                <p class="text-slate-400 text-sm" th:text="#{register.subtitle}">Bergabung dengan sistem manajemen penelitian</p>
             </div>
 
             <form th:action="@{/register}" th:object="${registerRequest}" method="post" class="space-y-4">
                 <div class="space-y-2">
-                    <label class="text-slate-300 text-sm font-medium">Nama Lengkap</label>
-                    <input type="text" th:field="*{name}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" placeholder="Dr. John Doe" required>
+                    <label class="text-slate-300 text-sm font-medium" th:text="#{label.fullname}">Nama Lengkap</label>
+                    <input type="text" th:field="*{name}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" th:placeholder="#{register.ph.fullname}" required>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-slate-300 text-sm font-medium">Email</label>
-                    <input type="email" th:field="*{email}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" placeholder="nama@contoh.com" required>
+                    <label class="text-slate-300 text-sm font-medium" th:text="#{label.email}">Email</label>
+                    <input type="email" th:field="*{email}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" th:placeholder="#{register.ph.email}" required>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-slate-300 text-sm font-medium">Password</label>
-                    <input type="password" th:field="*{password}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" placeholder="••••••••" required>
+                    <label class="text-slate-300 text-sm font-medium" th:text="#{label.password}">Password</label>
+                    <input type="password" th:field="*{password}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" th:placeholder="#{register.ph.password}" required>
                 </div>
 
                 <button type="submit" class="w-full py-2 px-4 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-medium rounded-md shadow-lg transition-all transform hover:scale-[1.02] mt-4">

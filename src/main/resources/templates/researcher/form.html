@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
+<body>
+<div layout:fragment="content">
+    <div class="max-w-xl mx-auto animate-enter">
+        <div class="border border-slate-700/50 shadow-xl bg-slate-900/80 backdrop-blur-sm rounded-xl p-8">
+            <div class="mb-6">
+                <h1 class="text-blue-100 text-2xl font-bold mb-2">Tambah Data Peneliti</h1>
+                <p class="text-slate-400 text-sm">Isi informasi penelitian dan peneliti</p>
+            </div>
+
+            <form th:action="@{/research/researchers/add}" th:object="${researchRequest}" method="post" class="space-y-4">
+                <div>
+                    <label class="text-slate-300 text-sm font-medium">Judul Penelitian</label>
+                    <input type="text" th:field="*{title}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100" required>
+                </div>
+
+                <div>
+                    <label class="text-slate-300 text-sm font-medium">Nama Peneliti</label>
+                    <input type="text" th:field="*{researcherName}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100" required>
+                </div>
+
+                <div>
+                    <label class="text-slate-300 text-sm font-medium">Tema</label>
+                    <input type="text" th:field="*{researchTheme}" list="themeList" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100" placeholder="Pilih atau ketik tema">
+                    <datalist id="themeList">
+                        <option th:each="t : ${themes}" th:value="${t}"></option>
+                    </datalist>
+                </div>
+
+                <div>
+                    <label class="text-slate-300 text-sm font-medium">Tahun</label>
+                    <input type="number" th:field="*{releaseYear}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100" required>
+                </div>
+
+                <div>
+                    <label class="text-slate-300 text-sm font-medium">Dana (opsional)</label>
+                    <input type="number" th:field="*{fundAmount}" class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-md text-slate-100" placeholder="0">
+                </div>
+
+                <button type="submit" class="w-full py-2 px-4 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-medium rounded-md shadow-lg transition-all">Simpan</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

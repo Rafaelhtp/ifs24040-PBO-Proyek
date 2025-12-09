@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
 <body>
 <div layout:fragment="content">
     
     <div class="flex justify-between items-center mb-6 animate-enter">
         <div>
-            <h2 class="text-2xl font-bold text-blue-100">Daftar Penelitian</h2>
-            <p class="text-slate-400 text-sm">Kelola semua data penelitian Anda</p>
+            <h2 class="text-2xl font-bold text-blue-100" th:text="#{list.title}">Daftar Penelitian</h2>
+            <p class="text-slate-400 text-sm" th:text="#{list.subtitle}">Kelola semua data penelitian Anda</p>
         </div>
         <a th:href="@{/research/add}" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white rounded-md shadow-lg transition-all">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Data
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> <span th:text="#{action.add}">Tambah Data</span>
         </a>
     </div>
 
@@ -47,8 +47,8 @@
             <div class="inline-flex p-4 rounded-full bg-slate-800 mb-4">
                 <i data-lucide="folder-open" class="w-8 h-8 text-slate-500"></i>
             </div>
-            <h3 class="text-slate-200 font-medium">Belum ada data</h3>
-            <p class="text-slate-500 text-sm mt-1">Mulai dengan menambahkan penelitian baru.</p>
+            <h3 class="text-slate-200 font-medium" th:text="#{list.empty.title}">Belum ada data</h3>
+            <p class="text-slate-500 text-sm mt-1" th:text="#{list.empty.subtitle}">Mulai dengan menambahkan penelitian baru.</p>
         </div>
     </div>
 

@@ -40,8 +40,16 @@ public class ResearchService {
         // Update field yang boleh diubah saja
         researchLama.setTitle(researchBaru.getTitle());
         researchLama.setResearchTheme(researchBaru.getResearchTheme());
+        researchLama.setResearcherName(researchBaru.getResearcherName());
+        researchLama.setResearcherEmail(researchBaru.getResearcherEmail());
+        researchLama.setResearcherInstitution(researchBaru.getResearcherInstitution());
+        researchLama.setTopic(researchBaru.getTopic());
+        researchLama.setDescription(researchBaru.getDescription());
+        researchLama.setImpact(researchBaru.getImpact());
         researchLama.setFundAmount(researchBaru.getFundAmount());
         researchLama.setReleaseYear(researchBaru.getReleaseYear());
+        researchLama.setFundCurrency(researchBaru.getFundCurrency());
+        researchLama.setFundSource(researchBaru.getFundSource());
         
         // Jangan lupa update gambarnya jika ada (logika gambar nanti di Controller)
         if (researchBaru.getCoverFilename() != null) {
@@ -64,5 +72,10 @@ public class ResearchService {
         return list.stream()
                 .mapToDouble(Research::getFundAmount)
                 .sum();
+    }
+
+    // 7. Ambil daftar tema unik milik user
+    public List<String> getDistinctThemes(UUID userId) {
+        return researchRepository.findDistinctThemesByUserId(userId);
     }
 }

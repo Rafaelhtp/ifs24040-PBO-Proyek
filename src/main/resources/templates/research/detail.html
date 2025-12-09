@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/main-layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/main-layout}">
 <body>
 <div layout:fragment="content">
 
@@ -9,7 +9,7 @@
             
             <div class="relative z-10">
                 <a th:href="@{/research}" class="inline-flex items-center text-blue-200 hover:text-white mb-6 transition-colors text-sm font-medium group">
-                    <i data-lucide="arrow-left" class="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform"></i> Kembali ke Daftar
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform"></i> <span th:text="#{detail.back}">Kembali ke Daftar</span>
                 </a>
                 
                 <h1 class="text-3xl font-bold mb-4 leading-tight" th:text="${research.title}">Judul Penelitian</h1>
@@ -18,7 +18,7 @@
                     <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium border border-white/10" th:text="${research.researchTheme}">Tema</span>
                     <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium border border-white/10" th:text="${research.releaseYear}">2024</span>
                     <span class="px-3 py-1 bg-green-500/20 backdrop-blur-sm rounded-full text-sm font-medium border border-green-400/30 text-green-100 flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Active
+                        <i data-lucide="check-circle" class="w-3 h-3"></i> <span th:text="#{detail.active}">Active</span>
                     </span>
                 </div>
             </div>
@@ -36,71 +36,63 @@
 
                     <div>
                         <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                            <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> Deskripsi
+                            <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> <span th:text="#{detail.description}">Deskripsi</span>
                         </h3>
-                        <p class="text-slate-600 leading-relaxed">
-                            Penelitian ini bertujuan untuk mengembangkan solusi inovatif dalam bidang <span th:text="${research.researchTheme}"></span>. 
-                            Proyek ini dilaksanakan pada tahun <span th:text="${research.releaseYear}"></span> dengan fokus utama pada pemecahan masalah riil di masyarakat.
-                            <br><br>
-                            Metode yang digunakan melibatkan analisis mendalam dan implementasi teknologi terkini. Hasil penelitian diharapkan dapat memberikan kontribusi signifikan bagi perkembangan ilmu pengetahuan.
-                        </p>
+                        <p class="text-slate-600 leading-relaxed" th:text="${research.description}">Deskripsi Penelitian</p>
                     </div>
 
                     <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
                         <h3 class="text-md font-bold text-green-800 mb-2 flex items-center gap-2">
-                            <i data-lucide="leaf" class="w-4 h-4"></i> Dampak Penelitian
+                            <i data-lucide="leaf" class="w-4 h-4"></i> <span th:text="#{detail.impact}">Dampak Penelitian</span>
                         </h3>
-                        <p class="text-green-700 text-sm">
-                            Berpotensi meningkatkan efisiensi operasional hingga 30% dan memberikan solusi berkelanjutan bagi mitra industri terkait.
-                        </p>
+                        <p class="text-green-700 text-sm" th:text="${research.impact}">Dampak Penelitian</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     
                     <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
-                        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Pendanaan</h3>
+                        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4" th:text="#{detail.funding}">Pendanaan</h3>
                         
                         <div class="mb-4">
-                            <p class="text-xs text-slate-400 mb-1">Total Hibah</p>
-                            <p class="text-2xl font-bold text-blue-600" th:text="'Rp ' + ${#numbers.formatDecimal(research.fundAmount, 0, 'COMMA', 0, 'POINT')}">0</p>
+                            <p class="text-xs text-slate-400 mb-1" th:text="#{detail.totalGrant}">Total Hibah</p>
+                            <p class="text-2xl font-bold text-blue-600" th:text="${research.fundCurrency} + ' ' + ${#numbers.formatDecimal(research.fundAmount, 0, 'COMMA', 0, 'POINT')}">0</p>
                         </div>
                         
                         <div class="mb-4">
-                            <p class="text-xs text-slate-400 mb-1">Sumber Dana</p>
-                            <p class="text-sm font-medium text-slate-700">Internal Kampus / Dikti</p>
+                            <p class="text-xs text-slate-400 mb-1" th:text="#{detail.fundSource}">Sumber Dana</p>
+                            <p class="text-sm font-medium text-slate-700" th:text="${research.fundSource}">Sumber Dana</p>
                         </div>
 
                         <div class="h-1 w-full bg-slate-200 rounded-full overflow-hidden">
                             <div class="h-full bg-blue-500 w-3/4 rounded-full"></div>
                         </div>
-                        <p class="text-xs text-slate-400 mt-2 text-right">75% Teralokasi</p>
+                        <p class="text-xs text-slate-400 mt-2 text-right" th:text="#{detail.allocated}">75% Teralokasi</p>
                     </div>
 
                     <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Tim Peneliti</h3>
+                        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4" th:text="#{detail.team}">Tim Peneliti</h3>
                         
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 font-bold border border-slate-200">
-                                <span th:text="${#strings.substring(user.name, 0, 1)}">U</span>
+                                <span th:text="${#strings.substring(research.researcherName, 0, 1)}">U</span>
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-slate-800" th:text="${user.name}">Nama Peneliti</p>
-                                <p class="text-xs text-slate-500" th:text="${user.email}">email@contoh.com</p>
+                                <p class="text-sm font-bold text-slate-800" th:text="${research.researcherName}">Nama Peneliti</p>
+                                <p class="text-xs text-slate-500" th:text="${research.researcherEmail}">email</p>
+                                <p class="text-xs text-slate-500" th:text="${research.researcherInstitution}">institusi</p>
                             </div>
                         </div>
                         
-                        <button class="w-full py-2 text-sm text-blue-600 font-medium bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
-                            Lihat Profil
-                        </button>
+                        <a th:href="@{'/research/edit/' + ${research.id}}" class="w-full py-2 text-sm text-blue-600 font-medium bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors text-center block" th:text="#{action.edit}">Edit Data</a>
                     </div>
 
                     <div class="flex flex-col gap-3">
-                        <button class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-sm transition-all hover:shadow-md flex justify-center items-center gap-2">
-                            <i data-lucide="edit-3" class="w-4 h-4"></i> Edit Data
-                        </button>
-                        <a th:href="@{'/research/delete/' + ${research.id}}" class="w-full py-2.5 bg-white border border-red-200 text-red-600 hover:bg-red-50 rounded-lg font-medium flex justify-center items-center gap-2 transition-colors" onclick="return confirm('Hapus data ini permanen?')">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i> Hapus Data
+                        <a th:href="@{'/research/edit/' + ${research.id}}" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-sm transition-all hover:shadow-md flex justify-center items-center gap-2">
+                            <i data-lucide="edit-3" class="w-4 h-4"></i> <span th:text="#{action.edit}">Edit Data</span>
+                        </a>
+                        <a th:href="@{'/research/delete/' + ${research.id}}" class="w-full py-2.5 bg-white border border-red-200 text-red-600 hover:bg-red-50 rounded-lg font-medium flex justify-center items-center gap-2 transition-colors" th:attr="onclick=${'return confirm(\'' + #messages.msg('confirm.delete') + '\')'}">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> <span th:text="#{action.delete}">Hapus Data</span>
                         </a>
                     </div>
 
