@@ -14,7 +14,6 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          # Disamakan dengan application.properties di bawah
           POSTGRES_DB: research_db
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: NobelMar071210
@@ -36,7 +35,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # BAGIAN INI SUDAH DIPERBAIKI (Hapus logika if/else yang rusak)
+      # PERBAIKAN 1: Membuat file properties dengan rapi tanpa logika if/else yang merusak YAML
       - name: Create application.properties
         run: |
           mkdir -p src/main/resources
@@ -62,36 +61,34 @@ jobs:
             sleep 5
           done
 
-      # Jalankan unit test + coverage
+      # PERBAIKAN 2: Menggunakan 'mvn' langsung (bukan ./mvnw) untuk menghindari error file not found
       - name: Run tests with coverage
         run: |
-          chmod +x mvnw
-          ./mvnw clean test jacoco:check
+          mvn clean test jacoco:check
 
       - name: Upload test report
+        if: always() # Upload report meskipun test gagal
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: target/site/jacoco/
 
-      # Tambahkan build JAR
       - name: Build Spring Boot JAR
         run: |
-          ./mvnw clean package -DskipTests
+          mvn clean package -DskipTests
 
-      # Verifikasi bahwa JAR memiliki manifest dan dapat dijalankan
       - name: Verify executable JAR
         run: |
           echo "Checking manifest..."
           jar tf target/*.jar | grep META-INF/MANIFEST.MF
-          jar xf target/*.jar META-INF/MANIFEST.MF
-          cat META-INF/MANIFEST.MF
+          
           echo "Testing java -jar startup..."
+          # Menjalankan JAR di background & mematikannya setelah 10 detik
           java -jar target/*.jar --spring.main.web-application-type=none --logging.level.root=OFF &
+          PID=$!
           sleep 10
-          pkill -f 'java -jar' || true
+          kill $PID || true
 
-      # Upload hasil build (opsional)
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
