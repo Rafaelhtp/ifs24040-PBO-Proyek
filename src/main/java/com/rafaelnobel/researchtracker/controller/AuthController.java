@@ -52,11 +52,11 @@ public String processLogin(@ModelAttribute LoginRequest loginRequest, HttpSessio
 
     // 4. Proses Register
     @PostMapping("/register")
-    public String processRegister(@ModelAttribute RegisterRequest registerRequest, Model model) {
+    public String processRegister(@ModelAttribute RegisterRequest registerRequest, Model model, jakarta.servlet.http.HttpSession session) {
         try {
-            // Panggil service untuk simpan user baru
-            authService.registerUser(registerRequest);
-            return "redirect:/login?success"; // Redirect ke login kalau sukses
+            com.rafaelnobel.researchtracker.entity.User newUser = authService.registerUser(registerRequest);
+            session.setAttribute("user", newUser);
+            return "redirect:/research/researchers/add"; // Arahkan langsung ke tambah profil peneliti
         } catch (RuntimeException e) {
             // Tangkap error (misal: Email sudah terdaftar)
             model.addAttribute("error", e.getMessage());

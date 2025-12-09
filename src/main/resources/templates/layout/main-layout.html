@@ -36,11 +36,19 @@
 </head>
 <body class="min-h-screen bg-slate-900 text-slate-200">
     <div class="max-w-7xl mx-auto p-6">
-        <div class="flex justify-end mb-4">
-            <div class="inline-flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-md px-3 py-1 text-sm">
-                <span class="text-slate-400">Lang:</span>
-                <a href="?lang=id" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-200">ID</a>
-                <a href="?lang=en" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-200">EN</a>
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center gap-2 text-sm">
+                <a th:href="@{/dashboard}" class="px-3 py-1 rounded hover:bg-slate-800 text-slate-300" th:text="#{nav.dashboard}">Dashboard</a>
+                <a th:href="@{/research}" class="px-3 py-1 rounded hover:bg-slate-800 text-slate-300" th:text="#{nav.research}">Research</a>
+                <a th:href="@{/research/researchers}" class="px-3 py-1 rounded hover:bg-slate-800 text-slate-300" th:text="#{nav.researchers}">Researchers</a>
+            </div>
+            <div class="inline-flex items-center gap-2">
+                <div class="inline-flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-md px-3 py-1 text-sm">
+                    <span class="text-slate-400">Lang:</span>
+                    <a href="?lang=id" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-200">ID</a>
+                    <a href="?lang=en" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-200">EN</a>
+                </div>
+                <a th:href="@{/logout}" class="ml-2 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm" th:text="#{nav.logout}">Logout</a>
             </div>
         </div>
         <div layout:fragment="content"></div>

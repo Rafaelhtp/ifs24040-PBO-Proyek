@@ -56,12 +56,12 @@
                         
                         <div class="mb-4">
                             <p class="text-xs text-slate-400 mb-1" th:text="#{detail.totalGrant}">Total Hibah</p>
-                            <p class="text-2xl font-bold text-blue-600" th:text="${research.fundCurrency} + ' ' + ${#numbers.formatDecimal(research.fundAmount, 0, 'COMMA', 0, 'POINT')}">0</p>
+                            <p class="text-2xl font-bold text-blue-600" th:text="${(research.fundCurrency != null ? research.fundCurrency : 'IDR') + ' ' + #numbers.formatDecimal(research.fundAmount != null ? research.fundAmount : 0, 0, 'COMMA', 0, 'POINT')}">0</p>
                         </div>
                         
                         <div class="mb-4">
                             <p class="text-xs text-slate-400 mb-1" th:text="#{detail.fundSource}">Sumber Dana</p>
-                            <p class="text-sm font-medium text-slate-700" th:text="${research.fundSource}">Sumber Dana</p>
+                            <p class="text-sm font-medium text-slate-700" th:text="${research.fundSource != null ? research.fundSource : '-'}">Sumber Dana</p>
                         </div>
 
                         <div class="h-1 w-full bg-slate-200 rounded-full overflow-hidden">
@@ -75,12 +75,12 @@
                         
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 font-bold border border-slate-200">
-                                <span th:text="${#strings.substring(research.researcherName, 0, 1)}">U</span>
+                                <span th:text="${research.researcherName} != null ? #strings.substring(research.researcherName, 0, 1) : 'U'">U</span>
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-slate-800" th:text="${research.researcherName}">Nama Peneliti</p>
-                                <p class="text-xs text-slate-500" th:text="${research.researcherEmail}">email</p>
-                                <p class="text-xs text-slate-500" th:text="${research.researcherInstitution}">institusi</p>
+                                <p class="text-sm font-bold text-slate-800" th:text="${research.researcherName != null ? research.researcherName : 'Unknown'}">Nama Peneliti</p>
+                                <p class="text-xs text-slate-500" th:text="${research.researcherEmail != null ? research.researcherEmail : '-'}">email</p>
+                                <p class="text-xs text-slate-500" th:text="${research.researcherInstitution != null ? research.researcherInstitution : '-'}">institusi</p>
                             </div>
                         </div>
                         

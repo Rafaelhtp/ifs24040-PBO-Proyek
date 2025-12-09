@@ -98,4 +98,15 @@ public class DashboardController {
 
         return "dashboard";
     }
+
+    // Aliases: akses langsung tanpa prefix /research
+    @GetMapping("/researchers")
+    public String aliasResearchers() {
+        return "redirect:/research/researchers";
+    }
+
+    @GetMapping("/researchers/add")
+    public String aliasResearchersAdd() {
+        return "redirect:/research/researchers/add";
+    }
 }

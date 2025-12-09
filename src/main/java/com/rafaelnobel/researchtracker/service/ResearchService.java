@@ -22,7 +22,7 @@ public class ResearchService {
 
     // 2. Ambil satu data detail berdasarkan ID
     public Research getResearchById(UUID id) {
-        return researchRepository.findById(id).orElseThrow(() -> new RuntimeException("Data tidak ditemukan!"));
+        return researchRepository.findById(id).orElse(null);
     }
 
     // 3. Simpan data baru (Create)

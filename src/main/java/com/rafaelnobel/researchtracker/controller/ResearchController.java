@@ -132,6 +132,10 @@ public class ResearchController {
     @GetMapping("/{id}")
     public String detailResearch(@PathVariable UUID id, Model model) {
         Research research = researchService.getResearchById(id);
+        if (research == null) {
+            model.addAttribute("errorMessage", "Data tidak ditemukan atau sudah dihapus.");
+            return "error";
+        }
         model.addAttribute("research", research);
         return "research/detail";
     }

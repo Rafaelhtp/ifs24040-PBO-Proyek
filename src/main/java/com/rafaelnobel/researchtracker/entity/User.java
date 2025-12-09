@@ -21,6 +21,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    // Optional profile fields captured during registration
+    private String institution;      // Institusi
+    private String field;            // Bidang
+    private String defaultTheme;     // Tema utama
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -50,6 +55,15 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getInstitution() { return institution; }
+    public void setInstitution(String institution) { this.institution = institution; }
+
+    public String getField() { return field; }
+    public void setField(String field) { this.field = field; }
+
+    public String getDefaultTheme() { return defaultTheme; }
+    public void setDefaultTheme(String defaultTheme) { this.defaultTheme = defaultTheme; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

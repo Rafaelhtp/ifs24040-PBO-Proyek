@@ -22,7 +22,7 @@ public class AuthService {
     private TokenRepository tokenRepository;
 
     // --- 1. METHOD REGISTER USER (Ini yang dicari error baris 57) ---
-    public void registerUser(RegisterRequest request) {
+    public com.rafaelnobel.researchtracker.entity.User registerUser(RegisterRequest request) {
         // Cek apakah email sudah ada?
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
@@ -32,13 +32,20 @@ public class AuthService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword()); // Di dunia nyata ini harus di-hash
+        // Jika password tidak diisi, set default sementara (untuk alur demo)
+        String pwd = (request.getPassword() != null && !request.getPassword().isBlank()) ? request.getPassword() : "default123";
+        user.setPassword(pwd); // Di dunia nyata ini harus di-hash
+
+        // Simpan profil tambahan
+        user.setInstitution(request.getInstitution());
+        user.setField(request.getField());
+        user.setDefaultTheme(request.getTheme());
         
         // Atribut Wajib Sistem
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     // --- 2. METHOD AUTHENTICATE (Ini yang dicari error baris 32) ---
