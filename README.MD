@@ -25,6 +25,8 @@
 * **Testing:** JUnit 5, Mockito.
 * **Tools:** Maven, Lombok.
 
+## Untuk membuka web:
+http://localhost:8080/login
 ## ⚙️ Prasyarat
 
 Sebelum menjalankan proyek ini, pastikan komputer kamu sudah terinstall:
