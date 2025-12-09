@@ -14,9 +14,10 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: db_pbo_app
+          # Disamakan dengan application.properties di bawah
+          POSTGRES_DB: research_db
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: NobelMar071210
         ports:
           - 5432:5432
         options: >-
@@ -35,27 +36,23 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Configure application.properties
+      # BAGIAN INI SUDAH DIPERBAIKI (Hapus logika if/else yang rusak)
+      - name: Create application.properties
         run: |
-          if [ -f src/main/resources/application.properties ]; then
-            sed -i 's|spring.datasource.username=.*|spring.datasource.username=postgres|g' src/main/resources/application.properties
-            sed -i 's|spring.datasource.password=.*|spring.datasource.password=postgres|g' src/main/resources/application.properties
-            sed -i 's|spring.datasource.url=.*|spring.datasource.url=jdbc:postgresql://localhost:5432/db_pbo_app|g' src/main/resources/application.properties
-          else
-            cat > src/main/resources/application.properties <<'EOF'
-spring.application.name=ResearchTracker
-spring.datasource.url=jdbc:postgresql://localhost:5432/db_pbo_app
-spring.datasource.username=postgres
-spring.datasource.password=postgres
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.thymeleaf.cache=false
-spring.servlet.multipart.max-file-size=5MB
-spring.servlet.multipart.max-request-size=5MB
-EOF
-          fi
+          mkdir -p src/main/resources
+          cat > src/main/resources/application.properties <<'EOF'
+          spring.application.name=ResearchTracker
+          spring.datasource.url=jdbc:postgresql://localhost:5432/research_db
+          spring.datasource.username=postgres
+          spring.datasource.password=NobelMar071210
+          spring.datasource.driver-class-name=org.postgresql.Driver
+          spring.jpa.hibernate.ddl-auto=create-drop
+          spring.jpa.show-sql=true
+          spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+          spring.thymeleaf.cache=false
+          spring.servlet.multipart.max-file-size=5MB
+          spring.servlet.multipart.max-request-size=5MB
+          EOF
 
       - name: Wait for PostgreSQL
         run: |
@@ -77,12 +74,12 @@ EOF
           name: test-results
           path: target/site/jacoco/
 
-      # 🔹 Tambahkan build JAR
+      # Tambahkan build JAR
       - name: Build Spring Boot JAR
         run: |
           ./mvnw clean package -DskipTests
 
-      # 🔹 Verifikasi bahwa JAR memiliki manifest dan dapat dijalankan
+      # Verifikasi bahwa JAR memiliki manifest dan dapat dijalankan
       - name: Verify executable JAR
         run: |
           echo "Checking manifest..."
@@ -94,10 +91,9 @@ EOF
           sleep 10
           pkill -f 'java -jar' || true
 
-      # 🔹 Upload hasil build (opsional)
+      # Upload hasil build (opsional)
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: spring-boot-app
-
           path: target/*.jar
