@@ -87,7 +87,7 @@
             <div th:each="item : ${researches}" class="p-4 bg-gradient-to-r from-slate-800/70 to-blue-900/30 rounded-lg border border-slate-700/50 hover:border-blue-700/50 hover:shadow-lg transition-all group">
                 <div class="flex justify-between items-start gap-4">
                     <div class="flex-1">
-                        <a th:href="@{'/research/' + ${item.id}}" class="text-blue-100 font-medium group-hover:text-blue-300 transition-colors hover:underline" th:text="${item.title}">Judul</a>
+                        <a th:href="@{'/dashboard/research/' + ${item.id}}" class="text-blue-100 font-medium group-hover:text-blue-300 transition-colors hover:underline" th:text="${item.title}">Judul</a>
                         <p class="text-slate-400 text-xs mt-1">
                             <span th:text="${item.releaseYear}">2024</span>
                         </p>

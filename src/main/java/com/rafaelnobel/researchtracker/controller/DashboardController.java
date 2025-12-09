@@ -109,4 +109,34 @@ public class DashboardController {
     public String aliasResearchersAdd() {
         return "redirect:/research/researchers/add";
     }
-}
+
+    // Detail dari Dashboard
+    @GetMapping("/dashboard/research/{id}")
+public String dashboardDetail(@org.springframework.web.bind.annotation.PathVariable java.util.UUID id, Model model, HttpSession session) {
+    
+    // --- TAMBAHAN PENTING: Ambil User dari Session (Sama seperti di method dashboard) ---
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        // Logic bypass login untuk demo (agar konsisten dengan method dashboard)
+        user = userRepository.findByEmail("admin@del.ac.id").orElse(null);
+        if (user == null) {
+            user = new User();
+            user.setId(UUID.randomUUID());
+            user.setName("Pengguna Demo");
+        }
+        session.setAttribute("user", user);
+    }
+    model.addAttribute("user", user); // <--- INI YANG HILANG SEBELUMNYA!
+    // -----------------------------------------------------------------------------------
+
+    com.rafaelnobel.researchtracker.entity.Research research = researchService.getResearchById(id);
+    
+    // Cek null untuk menghindari error di HTML
+    if (research == null) {
+        model.addAttribute("errorMessage", "Data tidak ditemukan atau sudah dihapus.");
+        return "error"; 
+    }
+    
+    model.addAttribute("research", research);
+    return "research/detail";
+}}
