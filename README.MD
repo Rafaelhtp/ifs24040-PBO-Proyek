@@ -32,12 +32,3 @@ Sebelum menjalankan proyek ini, pastikan komputer kamu sudah terinstall:
 1.  **Java JDK 17** atau lebih baru.
 2.  **Maven** (biasanya sudah include di IDE seperti IntelliJ/Eclipse/VS Code).
 3.  **PostgreSQL** (pastikan service berjalan di port 5432).
-
-## 🚀 Cara Instalasi & Menjalankan
-
-Ikuti langkah-langkah berikut untuk menjalankan aplikasi di komputer lokal:
-
-### 1. Clone Repositori
-```bash
-git clone [https://github.com/username-kamu/research-tracker.git](https://github.com/username-kamu/research-tracker.git)
-cd research-tracker
