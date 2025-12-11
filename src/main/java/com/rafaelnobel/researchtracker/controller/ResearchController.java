@@ -52,7 +52,8 @@ public class ResearchController {
     @PostMapping("/add")
     public String addResearch(@ModelAttribute ResearchRequest request, 
                               @RequestParam("coverImage") MultipartFile file,
-                              HttpSession session) {
+                              HttpSession session,
+                              org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("user");
         if (user == null) return "redirect:/login";
 
@@ -79,7 +80,8 @@ public class ResearchController {
         // -------------------------
 
         researchService.createResearch(research, user.getId());
-        return "redirect:/research";
+        redirectAttributes.addFlashAttribute("success", "Data berhasil ditambahkan");
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/researchers")

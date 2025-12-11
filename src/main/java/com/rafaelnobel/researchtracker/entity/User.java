@@ -1,6 +1,6 @@
-package com.rafaelnobel.researchtracker.entity; // PASTIIN INI BENAR
+package com.rafaelnobel.researchtracker.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*; // Pastikan menggunakan jakarta.* atau javax.* sesuai versi Spring Boot Anda
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,9 +22,9 @@ public class User {
     private String password;
 
     // Optional profile fields captured during registration
-    private String institution;      // Institusi
-    private String field;            // Bidang
-    private String defaultTheme;     // Tema utama
+    private String institution;     // Institusi
+    private String field;           // Bidang
+    private String defaultTheme;    // Tema utama
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -32,6 +32,8 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    // --- LIFECYCLE METHODS ---
+    // Method ini perlu ditest agar coverage 100%
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -43,7 +45,7 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
-    // --- MANUAL GETTER & SETTER (PENGGANTI LOMBOK) ---
+    // --- MANUAL GETTER & SETTER ---
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 

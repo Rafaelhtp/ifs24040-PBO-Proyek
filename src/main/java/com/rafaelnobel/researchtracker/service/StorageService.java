@@ -14,57 +14,60 @@ import java.util.UUID;
 @Service
 public class StorageService {
 
-    // Lokasi folder uploads (sama dengan konfigurasi WebMvcConfig)
-    private final Path rootLocation = Paths.get("src/main/resources/static/uploads");
+    private final Path rootLocation;
 
+    // 1. Constructor Default (Dipakai Spring Boot saat aplikasi jalan)
     public StorageService() {
+        // Panggil constructor kedua dengan path default
+        this(Paths.get("src/main/resources/static/uploads"));
+    }
+
+    // 2. Constructor Tambahan (Untuk Testing / Dependency Injection)
+    // Kita buat public agar Test bisa akses
+    public StorageService(Path location) {
+        this.rootLocation = location;
         try {
-            // Buat folder uploads otomatis jika belum ada saat aplikasi start
-            Files.createDirectories(rootLocation);
+            // Buat folder uploads
+            Files.createDirectories(location);
         } catch (IOException e) {
+            // INI YANG TADI MERAH. Sekarang bisa kita test!
             throw new RuntimeException("Gagal membuat folder upload!", e);
         }
     }
 
-    // Fungsi utama: Simpan file dan kembalikan nama filenya
     public String store(MultipartFile file) {
         if (file.isEmpty()) {
             throw new RuntimeException("Gagal menyimpan file kosong.");
         }
 
         try {
-            // Generate nama unik agar tidak bentrok (misal: skripsi.pdf -> UUID_skripsi.pdf)
             String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            
-            // Bersihkan path file (keamanan)
             Path destinationFile = this.rootLocation.resolve(
                     Paths.get(filename)).normalize().toAbsolutePath();
 
-            // Cek apakah file mencoba disimpan di luar folder uploads (serangan path traversal)
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new RuntimeException("Tidak bisa menyimpan file di luar folder uploads.");
             }
 
-            // Simpan file (Timpa jika ada nama sama)
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            return filename; // Kembalikan nama file untuk disimpan di database
+            return filename;
         } catch (IOException e) {
             throw new RuntimeException("Gagal menyimpan file.", e);
         }
     }
-    
-    // Fungsi Hapus File (Dipakai saat menghapus data penelitian)
+
     public void delete(String filename) {
-        try {
-            if (filename != null) {
-                Path filePath = rootLocation.resolve(filename);
-                Files.deleteIfExists(filePath);
+        if (filename != null) {
+            try {
+                Path file = rootLocation.resolve(filename);
+                Files.deleteIfExists(file);
+            } catch (IOException e) {
+                // Log error atau abaikan (sesuai logika bisnis Anda)
+                // System.err.println("Gagal menghapus file: " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.err.println("Gagal menghapus gambar: " + filename);
         }
     }
 }

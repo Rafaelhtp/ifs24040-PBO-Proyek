@@ -20,6 +20,10 @@ public class ResearchService {
         return researchRepository.findByUserId(userId);
     }
 
+    public List<Research> getAllResearchForAdmin() {
+        return researchRepository.findAll();
+    }
+
     // 2. Ambil satu data detail berdasarkan ID
     public Research getResearchById(UUID id) {
         return researchRepository.findById(id).orElse(null);

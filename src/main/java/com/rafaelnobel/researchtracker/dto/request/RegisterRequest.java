@@ -7,6 +7,7 @@ public class RegisterRequest {
     private String institution; // institusi
     private String field;       // bidang
     private String theme;       // tema
+    private String defaultTheme; // kompatibilitas dengan test
 
     // --- MANUAL GETTER & SETTER ---
     public String getName() { return name; }
@@ -26,4 +27,7 @@ public class RegisterRequest {
 
     public String getTheme() { return theme; }
     public void setTheme(String theme) { this.theme = theme; }
+
+    public String getDefaultTheme() { return defaultTheme; }
+    public void setDefaultTheme(String defaultTheme) { this.defaultTheme = defaultTheme; }
 }

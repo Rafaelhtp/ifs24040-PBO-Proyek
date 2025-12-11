@@ -20,6 +20,9 @@ public class AuthToken {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Transient
+    private User user;
+
     // --- MANUAL GETTER & SETTER (Pengganti Lombok) ---
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
@@ -32,4 +35,7 @@ public class AuthToken {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }

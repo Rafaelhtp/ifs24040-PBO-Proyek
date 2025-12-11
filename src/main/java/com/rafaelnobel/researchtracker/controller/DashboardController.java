@@ -40,17 +40,9 @@ public class DashboardController {
         }
 
         // Ambil semua data penelitian
-        List<Research> researches = new ArrayList<>();
-        try {
-            // Jika user admin, kita ambil SEMUA data (biar grafik ramai)
-            if (user.getEmail() != null && user.getEmail().equals("admin@del.ac.id")) {
-                researches = researchService.getAllResearch(user.getId()); 
-            } else {
-                researches = researchService.getAllResearch(user.getId());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<Research> researches = (user.getEmail() != null && user.getEmail().equals("admin@del.ac.id"))
+                ? researchService.getAllResearchForAdmin()
+                : researchService.getAllResearch(user.getId());
 
         if (q != null && !q.isBlank()) {
             String s = q.toLowerCase();
@@ -67,7 +59,9 @@ public class DashboardController {
 
         // 2. Data untuk PIE CHART (Jumlah per Tema)
         Map<String, Long> themeStats = researches.stream()
-            .collect(Collectors.groupingBy(Research::getResearchTheme, Collectors.counting()));
+            .map(Research::getResearchTheme)
+            .filter(java.util.Objects::nonNull)
+            .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
 
         // 3. Data untuk BAR CHART (Dana per Tahun) - INI YANG BARU
         Map<Integer, Double> fundingByYear = researches.stream()

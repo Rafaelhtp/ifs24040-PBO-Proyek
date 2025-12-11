@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 @Controller
 public class ImageController {
 
-    // Pastikan path ini SAMA PERSIS dengan yang ada di ResearchController
     private final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     @GetMapping("/uploads/{filename:.+}")
@@ -24,19 +23,25 @@ public class ImageController {
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         try {
             Path file = Paths.get(UPLOAD_DIR).resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
+            
+            // PERUBAHAN DI SINI: Kita panggil method protected loadResource
+            Resource resource = loadResource(file);
 
             if (resource.exists() || resource.isReadable()) {
-                // Tentukan tipe konten (misal: gambar JPEG/PNG)
-                // Kita set default ke IMAGE_JPEG agar browser tahu ini gambar
                 return ResponseEntity.ok()
-                        .contentType(MediaType.IMAGE_JPEG) 
+                        .contentType(MediaType.IMAGE_JPEG)
                         .body(resource);
             } else {
                 return ResponseEntity.notFound().build();
             }
         } catch (MalformedURLException e) {
+            // Baris ini akan hijau jika testMalformedUrlException dijalankan
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    // METHOD BARU: Protected agar bisa di-override oleh Test Class
+    protected Resource loadResource(Path file) throws MalformedURLException {
+        return new UrlResource(file.toUri());
     }
 }

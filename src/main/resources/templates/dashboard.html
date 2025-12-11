@@ -8,6 +8,13 @@
         <p class="text-slate-400" th:text="#{dashboard.subtitle}">Monitoring performa penelitian dan alokasi dana hibah.</p>
     </div>
 
+    <div th:if="${success}" class="mb-6 rounded-lg border border-green-600 bg-green-900/40 text-green-100 px-4 py-3">
+        <div class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span th:text="${success}">Berhasil</span>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="animate-enter delay-100 border border-blue-800/50 shadow-xl bg-gradient-to-br from-blue-800 to-blue-900 text-white rounded-xl p-6 relative overflow-hidden group hover:scale-[1.02] transition-transform">
             <div class="relative z-10">
